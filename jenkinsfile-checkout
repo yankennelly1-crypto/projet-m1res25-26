@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+ 
+    stages {
+        stage('CleanUp de Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+ 
+        stage('Cloner le GitHub') {
+            steps {
+                git branch: 'main', url: 'https://github.com/yankennelly1-crypto/projet-m1res25-26.git'
+            }
+        }
+ 
+        stage('install Docker') {
+            steps {
+                sh 'sudo dpkg --configure -a'
+                sh 'sudo apt install -f -y'
+                sh 'sudo apt update'
+                sh 'sudo apt install apt-transport-https ca-certificates curl software-properties-common -y'
+                sh 'sudo apt install docker.io -y'
+                sh 'sudo chmod 666 /var/run/docker.sock'
+                sh 'sudo usermod -aG docker jenkins'
+                sh 'sudo systemctl restart docker.service'
+                sh 'docker --version'
+                sh 'docker ps'
+            }
+        }
+    }
+}
+ 
