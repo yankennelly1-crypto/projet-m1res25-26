@@ -2,6 +2,7 @@ pipeline {
     agent any
  
     stages {
+ 
         stage('CleanUp de Workspace') {
             steps {
                 cleanWs()
@@ -28,6 +29,11 @@ pipeline {
                 sh 'docker ps'
             }
         }
+ 
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t repsite:v1 .'
+            }
+        }
     }
 }
- 
